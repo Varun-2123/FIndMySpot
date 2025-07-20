@@ -13,7 +13,7 @@ class SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 3100), () {
+    Future.delayed(Duration(milliseconds: 2900), () {
       if (mounted) {
         Navigator.pushReplacement(
           context,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
+import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
+import 'package:parking_app/Repository/screens/onbording/onbording2.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
 
 class Onbording1 extends StatefulWidget {
@@ -63,6 +65,31 @@ class Onbording1State extends State<Onbording1> {
               fontFamily: "Medium",
               size: 37,
             ),
+          ),
+          SizedBox(height: 50.h),
+          Row(
+            children: [
+              SizedBox(width: 25.w),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Homescreen()),
+                  );
+                },
+                child: Uihelper.greyButton(text: "Skip"),
+              ),
+              SizedBox(width: 15.w),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Onbording2()),
+                  );
+                },
+                child: Uihelper.blueButton(text: "Next"),
+              ),
+            ],
           ),
         ],
       ),
