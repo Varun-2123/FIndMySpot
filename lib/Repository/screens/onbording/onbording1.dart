@@ -41,7 +41,7 @@ class Onbording1State extends State<Onbording1> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 5),
           Row(
             children: [
               SizedBox(width: 30.w),
@@ -63,10 +63,10 @@ class Onbording1State extends State<Onbording1> {
               color: Appcolors.mainBlack,
               fontWeight: FontWeight.w500,
               fontFamily: "Medium",
-              size: 37,
+              size: 32,
             ),
           ),
-          SizedBox(height: 50.h),
+          SizedBox(height: 100.h),
           Row(
             children: [
               SizedBox(width: 25.w),
