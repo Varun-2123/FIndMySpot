@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 
 class Uihelper {
@@ -56,6 +57,33 @@ class Uihelper {
           fontWeight: FontWeight.w500,
           fontFamily: "Medium",
           size: 25,
+        ),
+      ),
+    );
+  }
+
+  static vehiclesButton({required String text, required IconData icon}) {
+    return Container(
+      height: 125.h,
+      width: 108.w,
+      decoration: BoxDecoration(
+        color: Appcolors.mainYellow,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Center(
+        child: Column(
+          children: [
+            SizedBox(height: 10.h),
+            Icon(icon, size: 50.sp),
+            SizedBox(height: 10.h),
+            customText(
+              text: text,
+              color: Appcolors.mainBlack,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Medium",
+              size: 25,
+            ),
+          ],
         ),
       ),
     );
