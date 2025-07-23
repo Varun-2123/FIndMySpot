@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 
 class Uihelper {
@@ -62,28 +61,43 @@ class Uihelper {
     );
   }
 
-  static vehiclesButton({required String text, required IconData icon}) {
-    return Container(
-      height: 125.h,
-      width: 108.w,
-      decoration: BoxDecoration(
-        color: Appcolors.mainYellow,
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 10.h),
-            Icon(icon, size: 50.sp),
-            SizedBox(height: 10.h),
-            customText(
-              text: text,
-              color: Appcolors.mainBlack,
-              fontWeight: FontWeight.w500,
-              fontFamily: "Medium",
-              size: 25,
-            ),
-          ],
+  static vehiclesButton({
+    required String text,
+    required String icon,
+    required String tapped,
+  }) {
+    var color1 = Appcolors.mainWhite;
+    var color2 = Appcolors.mainWhite;
+    if (tapped == "t") {
+      color1 = Appcolors.mainYellow;
+      color2 = Appcolors.mainBlack;
+    }
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 155.h,
+        width: 108.w,
+        decoration: BoxDecoration(
+          border: Border.all(color: color2, width: 2.sp),
+          color: color1,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 10.h),
+              SizedBox(height: 70.h, width: 70.w, child: Image.asset(icon)),
+              SizedBox(height: 10.h),
+              customText(
+                text: text,
+                color: Appcolors.mainBlack,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Medium",
+                size: 25,
+              ),
+            ],
+          ),
         ),
       ),
     );
