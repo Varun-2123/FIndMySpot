@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
+import 'package:parking_app/Repository/screens/boarding/boarding.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
 
@@ -98,7 +99,7 @@ class _Onbording2State extends State<Onbording2> {
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Homescreen()),
+                    MaterialPageRoute(builder: (context) => Boarding()),
                   );
                 },
                 child: Uihelper.blueButton(text: "Next"),

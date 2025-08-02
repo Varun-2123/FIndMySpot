@@ -144,7 +144,9 @@ class _HomescreenState extends State<Homescreen> {
                 left: 125.w,
                 bottom: 70.h,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=> ####))
+                  },
                   child: CircleAvatar(
                     radius: 70.h,
                     backgroundColor: Appcolors.mainYellow,

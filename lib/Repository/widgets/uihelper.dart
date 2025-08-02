@@ -61,6 +61,30 @@ class Uihelper {
     );
   }
 
+  static loginButton({required String text, Color? color}) {
+    var textColor = Colors.white;
+    if (color == null) {
+      textColor = Colors.black;
+      color = Appcolors.grey2;
+    }
+    return Container(
+      height: 50.h,
+      width: 320.w,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(25.0),
+      ),
+      child: Center(
+        child: customText(
+          text: text,
+          color: textColor,
+          fontWeight: FontWeight.normal,
+          size: 20,
+        ),
+      ),
+    );
+  }
+
   static vehiclesButton({
     required String text,
     required String icon,
