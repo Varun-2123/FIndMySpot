@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
+import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/login/loginscreen.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
 
@@ -43,14 +44,16 @@ class WavyClipper extends CustomClipper<Path> {
 }
 
 class _RegistrationscreenState extends State<Registrationscreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  var isHidden = true;
+  var isChecked = false;
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController namecontroller = TextEditingController();
-    TextEditingController emailcontroller = TextEditingController();
-    TextEditingController passwordcontroller = TextEditingController();
-    var isChecked = false;
-    var isNotVisible = true;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Stack(
@@ -85,15 +88,15 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                         text: "Create Your Account",
                         color: Colors.black,
                         fontWeight: FontWeight.w900,
-                        size: 34,
+                        size: 33,
                         fontFamily: "Medium",
                       ),
                       SizedBox(height: 5.h),
                       Uihelper.customText(
-                        text: "Please enter your details to Sign Up",
+                        text: "Please enter your details to Sign up",
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        size: 16,
+                        size: 18,
                       ),
                     ],
                   ),
@@ -106,11 +109,11 @@ class _RegistrationscreenState extends State<Registrationscreen> {
             children: [
               SizedBox(width: 22.w),
               Uihelper.customText(
-                text: "Sign Up",
-                color: Appcolors.blueButton,
+                text: "Sign up",
+                color: Appcolors.mainBlack,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Medium",
-                size: 25,
+                size: 28,
               ),
             ],
           ),
@@ -119,21 +122,21 @@ class _RegistrationscreenState extends State<Registrationscreen> {
             width: 320.w,
             child: TextField(
               keyboardType: TextInputType.text,
-              controller: namecontroller,
+              controller: nameController,
               decoration: InputDecoration(
-                hintText: "Name",
+                hintText: "Username",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 15.h),
           SizedBox(
             width: 320.w,
             child: TextField(
               keyboardType: TextInputType.emailAddress,
-              controller: emailcontroller,
+              controller: emailController,
               decoration: InputDecoration(
                 hintText: "Email",
                 border: OutlineInputBorder(
@@ -146,15 +149,15 @@ class _RegistrationscreenState extends State<Registrationscreen> {
           SizedBox(
             width: 320.w,
             child: TextField(
-              obscureText: isNotVisible,
+              obscureText: isHidden,
               keyboardType: TextInputType.text,
-              controller: passwordcontroller,
+              controller: passwordController,
               decoration: InputDecoration(
                 hintText: "Password",
                 suffixIcon: InkWell(
                   onTap: () {
                     setState(() {
-                      isNotVisible = !isNotVisible;
+                      isHidden = !isHidden;
                     });
                   },
                   child: Icon(Icons.remove_red_eye),
@@ -183,15 +186,73 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                 ),
               ),
               Uihelper.customText(
-                text: "I accept the Terms & Conditions",
+                text: "I Agree to Terms & Conditions",
                 color: Appcolors.mainBlack,
                 fontWeight: FontWeight.w400,
-                size: 13,
+                size: 17,
               ),
+              SizedBox(width: 8.w),
             ],
           ),
           SizedBox(height: 25.h),
-          Uihelper.loginButton(text: "Sign Up", color: Appcolors.blueButton),
+          InkWell(
+            onTap: () {
+              if (nameController.text.isEmpty ||
+                  emailController.text.isEmpty ||
+                  passwordController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      "All Fields are required!",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    margin: const EdgeInsets.only(
+                      top: 40, // distance from top
+                      left: 10,
+                      right: 10,
+                      bottom: 760,
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              } else if (!isChecked) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      "Please agree to the Terms & Conditions",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    margin: const EdgeInsets.only(
+                      top: 40, // distance from top
+                      left: 10,
+                      right: 10,
+                      bottom: 760,
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              } else {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Homescreen()),
+                );
+              }
+            },
+            child: Uihelper.loginButton(
+              text: "Sign up",
+              color: Appcolors.blueButton,
+            ),
+          ),
           SizedBox(height: 10.h),
           Row(
             children: [
@@ -207,7 +268,9 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Loginscreen()),
+                    MaterialPageRoute(
+                      builder: (context) => const Loginscreen(),
+                    ),
                   );
                 },
                 child: Uihelper.customText(

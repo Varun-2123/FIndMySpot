@@ -18,23 +18,22 @@ class _BoardingState extends State<Boarding> {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(height: 110.h),
+          SizedBox(height: 90.h),
           Row(
             children: [
-              SizedBox(width: 12.w),
-              Uihelper.customText(
-                text: "Welcome to",
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                size: 26,
-                fontFamily: "Medium",
-              ),
-              SizedBox(width: 5.w),
+              SizedBox(width: 40.w),
+              // Uihelper.customText(
+              //   text: "Welcome to",
+              //   color: Colors.black,
+              //   fontWeight: FontWeight.w500,
+              //   size: 26,
+              //   fontFamily: "Medium",
+              // ),
               Uihelper.customText(
                 text: "FindMySpot",
-                color: Appcolors.blueButton,
-                fontWeight: FontWeight.w500,
-                size: 35,
+                color: Appcolors.grey6,
+                fontWeight: FontWeight.bold,
+                size: 48,
                 fontFamily: "Bold",
               ),
             ],
@@ -42,14 +41,18 @@ class _BoardingState extends State<Boarding> {
           SizedBox(height: 10.h),
           Uihelper.customText(
             text: "Because hunting for parking is so last year.",
-            color: Colors.black,
+            color: Appcolors.mainBlack,
             fontWeight: FontWeight.normal,
             fontFamily: "Medium",
             size: 14,
           ),
           SizedBox(height: 100.h),
-          Image.asset("assets/images/parking_image.png", height: 300.h),
-          SizedBox(height: 150.h),
+          Image.asset(
+            "assets/images/parking_image.png",
+            height: 300.h,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 120.h),
           InkWell(
             onTap: () {
               Navigator.pushReplacement(
@@ -70,7 +73,7 @@ class _BoardingState extends State<Boarding> {
                 MaterialPageRoute(builder: (context) => Registrationscreen()),
               );
             },
-            child: Uihelper.loginButton(text: "Sigh Up"),
+            child: Uihelper.loginButton(text: "Sign up"),
           ),
         ],
       ),

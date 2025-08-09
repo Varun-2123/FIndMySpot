@@ -37,6 +37,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   avatar_glow: ^3.0.1
   font_awesome_flutter: ^10.8.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

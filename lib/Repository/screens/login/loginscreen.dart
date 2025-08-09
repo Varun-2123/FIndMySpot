@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
+import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/registration/registrationscreen.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
 
@@ -51,6 +52,7 @@ class _LoginscreenState extends State<Loginscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Stack(
@@ -107,7 +109,7 @@ class _LoginscreenState extends State<Loginscreen> {
               SizedBox(width: 22.w),
               Uihelper.customText(
                 text: "Login",
-                color: Appcolors.blueButton,
+                color: Appcolors.mainBlack,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Medium",
                 size: 28,
@@ -179,7 +181,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 onTap: () {},
                 child: Uihelper.customText(
                   text: "Forgot Password?",
-                  color: Appcolors.mainBlack,
+                  color: Appcolors.blueButton,
                   fontWeight: FontWeight.w400,
                   size: 16,
                 ),
@@ -187,7 +189,42 @@ class _LoginscreenState extends State<Loginscreen> {
             ],
           ),
           SizedBox(height: 25.h),
-          Uihelper.loginButton(text: "Login", color: Appcolors.blueButton),
+          InkWell(
+            onTap: () {
+              if (emailcontroller.text.isEmpty ||
+                  passwordcontroller.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      "Fields cannot be empty!",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    margin: const EdgeInsets.only(
+                      top: 40, // distance from top
+                      left: 10,
+                      right: 10,
+                      bottom: 760,
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              } else {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Homescreen()),
+                );
+              }
+            },
+            child: Uihelper.loginButton(
+              text: "Login",
+              color: Appcolors.blueButton,
+            ),
+          ),
           SizedBox(height: 10.h),
           Row(
             children: [
@@ -204,7 +241,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Registrationscreen(),
+                      builder: (context) => const Registrationscreen(),
                     ),
                   );
                 },
