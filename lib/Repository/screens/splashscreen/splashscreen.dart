@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
+import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/onbording/onbording1.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -10,17 +13,12 @@ class Splashscreen extends StatefulWidget {
 }
 
 class SplashscreenState extends State<Splashscreen> {
+  static const String field1 = "Login";
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 2900), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Onbording1()),
-        );
-      }
-    });
+
+    checkerFunction();
   }
 
   @override
@@ -39,5 +37,42 @@ class SplashscreenState extends State<Splashscreen> {
         ),
       ),
     );
+  }
+
+  void checkerFunction() async {
+    var pref = await SharedPreferences.getInstance();
+
+    var isLoggedIn = pref.getBool(field1);
+
+    if (isLoggedIn != null) {
+      if (isLoggedIn) {
+        Timer(Duration(milliseconds: 2900), () {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Homescreen()),
+            );
+          }
+        });
+      } else {
+        Timer(Duration(milliseconds: 2900), () {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Onbording1()),
+            );
+          }
+        });
+      }
+    } else {
+      Timer(Duration(milliseconds: 2900), () {
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Onbording1()),
+          );
+        }
+      });
+    }
   }
 }

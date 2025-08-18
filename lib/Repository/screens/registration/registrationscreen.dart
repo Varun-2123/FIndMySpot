@@ -44,9 +44,9 @@ class WavyClipper extends CustomClipper<Path> {
 }
 
 class _RegistrationscreenState extends State<Registrationscreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
   var isHidden = true;
   var isChecked = false;
 

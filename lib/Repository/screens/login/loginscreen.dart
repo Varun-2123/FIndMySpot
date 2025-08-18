@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/registration/registrationscreen.dart';
+import 'package:parking_app/Repository/screens/splashscreen/splashscreen.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
@@ -44,8 +46,8 @@ class WavyClipper extends CustomClipper<Path> {
 }
 
 class _LoginscreenState extends State<Loginscreen> {
-  TextEditingController emailcontroller = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
+  var emailcontroller = TextEditingController();
+  var passwordcontroller = TextEditingController();
   var isNotVisible = true;
   var isChecked = false;
 
@@ -190,7 +192,7 @@ class _LoginscreenState extends State<Loginscreen> {
           ),
           SizedBox(height: 25.h),
           InkWell(
-            onTap: () {
+            onTap: () async {
               if (emailcontroller.text.isEmpty ||
                   passwordcontroller.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -214,10 +216,21 @@ class _LoginscreenState extends State<Loginscreen> {
                   ),
                 );
               } else {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Homescreen()),
-                );
+                // check kariyo credentials phele fir shared preference wala kaam karna hai
+
+                var pref = await SharedPreferences.getInstance();
+                pref.setBool(SplashscreenState.field1, true);
+
+                if (mounted) {
+                  if (context.mounted) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Homescreen(),
+                      ),
+                    );
+                  }
+                }
               }
             },
             child: Uihelper.loginButton(
