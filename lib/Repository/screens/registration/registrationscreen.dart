@@ -124,7 +124,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
               keyboardType: TextInputType.text,
               controller: nameController,
               decoration: InputDecoration(
-                hintText: "Username",
+                labelText: "Username",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -138,7 +138,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
               keyboardType: TextInputType.emailAddress,
               controller: emailController,
               decoration: InputDecoration(
-                hintText: "Email",
+                labelText: "Email",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -153,7 +153,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
               keyboardType: TextInputType.text,
               controller: passwordController,
               decoration: InputDecoration(
-                hintText: "Password",
+                labelText: "Password",
                 suffixIcon: InkWell(
                   onTap: () {
                     setState(() {

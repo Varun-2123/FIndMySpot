@@ -125,7 +125,7 @@ class _LoginscreenState extends State<Loginscreen> {
               keyboardType: TextInputType.emailAddress,
               controller: emailcontroller,
               decoration: InputDecoration(
-                hintText: "Email",
+                labelText: "Email",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -140,7 +140,7 @@ class _LoginscreenState extends State<Loginscreen> {
               keyboardType: TextInputType.text,
               controller: passwordcontroller,
               decoration: InputDecoration(
-                hintText: "Password",
+                labelText: "Password",
                 suffixIcon: InkWell(
                   onTap: () {
                     setState(() {
