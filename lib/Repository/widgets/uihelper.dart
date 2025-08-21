@@ -126,4 +126,24 @@ class Uihelper {
       ),
     );
   }
+
+  static yellowButton({required String text}) {
+    return Container(
+      height: 85.h,
+      width: 330.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: Appcolors.mainYellow,
+      ),
+      child: Center(
+        child: customText(
+          text: text,
+          color: Appcolors.mainBlack,
+          fontWeight: FontWeight.w400,
+          fontFamily: "Medium",
+          size: 25,
+        ),
+      ),
+    );
+  }
 }
