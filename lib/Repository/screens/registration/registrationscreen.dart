@@ -12,18 +12,20 @@ class Registrationscreen extends StatefulWidget {
   State<Registrationscreen> createState() => _RegistrationscreenState();
 }
 
-class WavyClipper extends CustomClipper<Path> {
+class SingleWaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
 
-    path.lineTo(0, size.height * 0.25);
+    // Start bottom-left
+    path.lineTo(0, size.height * 0.6);
 
+    // Single smooth wave
     path.quadraticBezierTo(
-      size.width * 0.20,
-      size.height * 0.55,
-      size.width * 0.40,
-      size.height * 0.5,
+      size.width * 0.4,
+      size.height * 0.2, // control point (peak in middle)
+      size.width,
+      size.height * 0.45, // end point (bottom-right slope)
     );
 
     path.quadraticBezierTo(
@@ -33,7 +35,9 @@ class WavyClipper extends CustomClipper<Path> {
       size.height * 0.75,
     );
 
+    // Close to top-right
     path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
     path.close();
 
     return path;
@@ -59,15 +63,15 @@ class _RegistrationscreenState extends State<Registrationscreen> {
           Stack(
             children: [
               ClipPath(
-                clipper: WavyClipper(),
+                clipper: SingleWaveClipper(),
                 child: Container(
                   height: 250,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xFF001b4b),
-                        Color(0xff002c7c),
-                        Color(0xFF738dbe),
+                        const Color.fromARGB(255, 255, 200, 0),
+                        Appcolors.mainYellow,
+                        Color.fromARGB(255, 255, 238, 125),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -250,7 +254,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
             },
             child: Uihelper.loginButton(
               text: "Sign up",
-              color: Appcolors.blueButton,
+              color: Appcolors.mainYellow,
             ),
           ),
           SizedBox(height: 10.h),
@@ -276,7 +280,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                 child: Uihelper.customText(
                   text: "Login",
                   color: Appcolors.blueButton,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   size: 14,
                 ),
               ),

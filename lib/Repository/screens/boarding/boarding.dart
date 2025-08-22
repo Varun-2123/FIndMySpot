@@ -22,33 +22,27 @@ class _BoardingState extends State<Boarding> {
           Row(
             children: [
               SizedBox(width: 40.w),
-              // Uihelper.customText(
-              //   text: "Welcome to",
-              //   color: Colors.black,
-              //   fontWeight: FontWeight.w500,
-              //   size: 26,
-              //   fontFamily: "Medium",
-              // ),
+
               Uihelper.customText(
                 text: "FindMySpot",
-                color: Appcolors.grey6,
+                color: Appcolors.mainBlack,
                 fontWeight: FontWeight.bold,
                 size: 48,
                 fontFamily: "Bold",
               ),
             ],
           ),
-          SizedBox(height: 10.h),
+
           Uihelper.customText(
             text: "Because hunting for parking is so last year.",
-            color: Appcolors.mainBlack,
+            color: Appcolors.grey5,
             fontWeight: FontWeight.normal,
             fontFamily: "Medium",
             size: 14,
           ),
-          SizedBox(height: 100.h),
+          SizedBox(height: 110.h),
           Image.asset(
-            "assets/images/parking_image.png",
+            "assets/images/parking_image2.png",
             height: 300.h,
             fit: BoxFit.cover,
           ),
@@ -62,7 +56,7 @@ class _BoardingState extends State<Boarding> {
             },
             child: Uihelper.loginButton(
               text: "Login",
-              color: Appcolors.blueButton,
+              color: Appcolors.mainYellow,
             ),
           ),
           SizedBox(height: 15.h),

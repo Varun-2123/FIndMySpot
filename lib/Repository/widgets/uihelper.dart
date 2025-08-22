@@ -74,7 +74,7 @@ class Uihelper {
   }
 
   static loginButton({required String text, Color? color}) {
-    var textColor = Colors.white;
+    var textColor = Colors.black;
     if (color == null) {
       textColor = Colors.black;
       color = Appcolors.grey2;

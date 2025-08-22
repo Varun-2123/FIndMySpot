@@ -66,9 +66,9 @@ class _LoginscreenState extends State<Loginscreen> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xFF001b4b),
-                        Color(0xff002c7c),
-                        Color(0xFF738dbe),
+                        const Color.fromARGB(255, 255, 200, 0),
+                        Appcolors.mainYellow,
+                        Color.fromARGB(255, 246, 234, 155),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -184,7 +184,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 child: Uihelper.customText(
                   text: "Forgot Password?",
                   color: Appcolors.blueButton,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.bold,
                   size: 16,
                 ),
               ),
@@ -219,7 +219,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 // check kariyo credentials phele fir shared preference wala kaam karna hai
 
                 var pref = await SharedPreferences.getInstance();
-                pref.setBool(SplashscreenState.field1, true);
+                pref.setBool(SplashscreenState.field1, isChecked);
 
                 if (mounted) {
                   if (context.mounted) {
@@ -235,7 +235,7 @@ class _LoginscreenState extends State<Loginscreen> {
             },
             child: Uihelper.loginButton(
               text: "Login",
-              color: Appcolors.blueButton,
+              color: Appcolors.mainYellow,
             ),
           ),
           SizedBox(height: 10.h),
@@ -261,7 +261,8 @@ class _LoginscreenState extends State<Loginscreen> {
                 child: Uihelper.customText(
                   text: "Sign Up",
                   color: Appcolors.blueButton,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Medium",
                   size: 14,
                 ),
               ),
