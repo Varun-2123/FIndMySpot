@@ -9,10 +9,10 @@ class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
 
   @override
-  State<Homescreen> createState() => _HomescreenState();
+  State<Homescreen> createState() => HomescreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class HomescreenState extends State<Homescreen> {
   var name = "John";
   var vehicles = [
     {
@@ -37,8 +37,8 @@ class _HomescreenState extends State<Homescreen> {
       "hint": "Mini Bus, Shuttle, Double-Decker etc.",
     },
   ];
-  var defaultImg = "assets/images/Car1.png";
-  var defaultVeh = "Car";
+  static var defaultImg = "assets/images/Car1.png";
+  static var defaultVeh = "Car";
   var defaultHint = "SUV, Hatchback, Sedan, etc.";
 
   var modelNameController = TextEditingController();

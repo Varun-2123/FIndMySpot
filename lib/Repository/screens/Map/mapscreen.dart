@@ -13,8 +13,26 @@ class Mapscreen extends StatefulWidget {
 }
 
 class _MapscreenState extends State<Mapscreen> {
+  final List<String> zones = [
+    "A-013",
+    "A-022",
+    "C-007",
+    "B-105",
+    "C-123",
+    "E-013",
+    "A-111",
+    "B-689",
+  ];
+  // TimeOfDay? selectedTime;
+
+  // String getDisplayedTime(BuildContext context) {
+  //   final time = selectedTime ?? TimeOfDay.now();
+  //   return time.format(context);
+  // }
+
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -70,7 +88,30 @@ class _MapscreenState extends State<Mapscreen> {
                     top: 0,
                     left: 100,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[0],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -79,7 +120,30 @@ class _MapscreenState extends State<Mapscreen> {
                     top: 80,
                     left: 180,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[1],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -88,7 +152,30 @@ class _MapscreenState extends State<Mapscreen> {
                     top: 150,
                     right: 60,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[2],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -97,7 +184,30 @@ class _MapscreenState extends State<Mapscreen> {
                     top: 180,
                     left: 60,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[3],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -106,7 +216,30 @@ class _MapscreenState extends State<Mapscreen> {
                     top: 320,
                     left: 200,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[4],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -115,7 +248,30 @@ class _MapscreenState extends State<Mapscreen> {
                     bottom: 140,
                     left: 50,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[5],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -124,7 +280,30 @@ class _MapscreenState extends State<Mapscreen> {
                     bottom: 280,
                     left: 85,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[6],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
@@ -133,7 +312,30 @@ class _MapscreenState extends State<Mapscreen> {
                     bottom: 240,
                     right: 60,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                bottomInset,
+                              ),
+                              child: Wrap(
+                                children: [
+                                  Uihelper.popUpSheet(
+                                    context: context,
+                                    zone: zones[7],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Icon(FontAwesomeIcons.locationDot, size: 30.sp),
                     ),
                   ),
