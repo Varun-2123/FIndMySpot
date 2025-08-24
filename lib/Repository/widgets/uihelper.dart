@@ -132,6 +132,7 @@ class Uihelper {
                 fontFamily: "Medium",
                 size: 25,
               ),
+              SizedBox(height: 10.h),
             ],
           ),
         ),
@@ -376,6 +377,7 @@ class Uihelper {
                 },
                 child: yellowButton(text: "Start Booking"),
               ),
+              SizedBox(height: 40.h),
             ],
           ),
         );

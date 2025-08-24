@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:parking_app/Domain/Services/firebase/authentication.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/registration/registrationscreen.dart';
@@ -46,10 +47,16 @@ class WavyClipper extends CustomClipper<Path> {
 }
 
 class _LoginscreenState extends State<Loginscreen> {
-  var emailcontroller = TextEditingController();
-  var passwordcontroller = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
   var isNotVisible = true;
   var isChecked = false;
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +130,7 @@ class _LoginscreenState extends State<Loginscreen> {
             width: 320.w,
             child: TextField(
               keyboardType: TextInputType.emailAddress,
-              controller: emailcontroller,
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: "Email",
                 border: OutlineInputBorder(
@@ -138,7 +145,7 @@ class _LoginscreenState extends State<Loginscreen> {
             child: TextField(
               obscureText: isNotVisible,
               keyboardType: TextInputType.text,
-              controller: passwordcontroller,
+              controller: passwordController,
               decoration: InputDecoration(
                 labelText: "Password",
                 suffixIcon: InkWell(
@@ -193,8 +200,8 @@ class _LoginscreenState extends State<Loginscreen> {
           SizedBox(height: 25.h),
           InkWell(
             onTap: () async {
-              if (emailcontroller.text.isEmpty ||
-                  passwordcontroller.text.isEmpty) {
+              if (emailController.text.isEmpty ||
+                  passwordController.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text(
@@ -218,10 +225,34 @@ class _LoginscreenState extends State<Loginscreen> {
               } else {
                 // check kariyo credentials phele fir shared preference wala kaam karna hai
 
+                var flag = await Authentication.loginUser(
+                  context: context,
+                  emailController: emailController,
+                  passwordController: passwordController,
+                );
                 var pref = await SharedPreferences.getInstance();
                 pref.setBool(SplashscreenState.field1, isChecked);
-
-                if (mounted) {
+                if (mounted && context.mounted && flag) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text(
+                        "Welcome Back!",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor: Appcolors.mainGreen,
+                      behavior: SnackBarBehavior.floating,
+                      margin: const EdgeInsets.only(
+                        top: 40,
+                        left: 10,
+                        right: 10,
+                        bottom: 760,
+                      ),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
                   if (context.mounted) {
                     Navigator.pushReplacement(
                       context,

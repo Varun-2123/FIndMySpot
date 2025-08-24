@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "424037308410",
+    "project_id": "findmyspot-a693c",
+    "storage_bucket": "findmyspot-a693c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424037308410:android:2ee022b9fed9cf1fe33643",
+        "android_client_info": {
+          "package_name": "com.example.parking_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN0z-AaYLMhUS17enYtXOev4OS6QqobqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

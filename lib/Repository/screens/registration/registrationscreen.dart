@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:parking_app/Domain/Services/firebase/authentication.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/login/loginscreen.dart';
@@ -48,11 +49,17 @@ class SingleWaveClipper extends CustomClipper<Path> {
 }
 
 class _RegistrationscreenState extends State<Registrationscreen> {
-  var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var isHidden = true;
   var isChecked = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,19 +129,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
             ],
           ),
           SizedBox(height: 20.h),
-          SizedBox(
-            width: 320.w,
-            child: TextField(
-              keyboardType: TextInputType.text,
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: "Username",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-            ),
-          ),
+
           SizedBox(height: 15.h),
           SizedBox(
             width: 320.w,
@@ -200,9 +195,8 @@ class _RegistrationscreenState extends State<Registrationscreen> {
           ),
           SizedBox(height: 25.h),
           InkWell(
-            onTap: () {
-              if (nameController.text.isEmpty ||
-                  emailController.text.isEmpty ||
+            onTap: () async {
+              if (emailController.text.isEmpty ||
                   passwordController.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -224,7 +218,8 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                     duration: const Duration(seconds: 2),
                   ),
                 );
-              } else if (!isChecked) {
+              }
+              if (!isChecked) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text(
@@ -237,7 +232,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                     backgroundColor: Colors.red,
                     behavior: SnackBarBehavior.floating,
                     margin: const EdgeInsets.only(
-                      top: 40, // distance from top
+                      top: 40,
                       left: 10,
                       right: 10,
                       bottom: 760,
@@ -246,10 +241,37 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                   ),
                 );
               } else {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Homescreen()),
+                final flag = await Authentication.createUser(
+                  context: context,
+                  emailController: emailController,
+                  passwordController: passwordController,
                 );
+                if (mounted && context.mounted && flag) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text(
+                        "Sign up Successful",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor: Appcolors.mainGreen,
+                      behavior: SnackBarBehavior.floating,
+                      margin: const EdgeInsets.only(
+                        top: 40,
+                        left: 10,
+                        right: 10,
+                        bottom: 760,
+                      ),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Homescreen()),
+                  );
+                }
               }
             },
             child: Uihelper.loginButton(

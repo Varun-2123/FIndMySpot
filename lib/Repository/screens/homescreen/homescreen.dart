@@ -43,8 +43,6 @@ class HomescreenState extends State<Homescreen> {
 
   var modelNameController = TextEditingController();
 
-  var modelColorController = TextEditingController();
-
   var modelTypeController = TextEditingController();
 
   var numberPlateController = TextEditingController();
@@ -227,22 +225,7 @@ class HomescreenState extends State<Homescreen> {
                                           ),
                                         ),
                                       ),
-                                      // Vehicle Color
-                                      SizedBox(height: 20.h),
-                                      SizedBox(
-                                        width: 330.w,
-                                        child: TextField(
-                                          keyboardType: TextInputType.text,
-                                          controller: modelColorController,
-                                          decoration: InputDecoration(
-                                            labelText: "Model Color",
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+
                                       // Vehicle Type
                                       SizedBox(height: 20.h),
                                       SizedBox(
