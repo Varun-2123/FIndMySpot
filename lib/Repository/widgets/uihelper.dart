@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:parking_app/Data/services/firebase/retrieve/retrieve.dart';
+import 'package:parking_app/Data/services/firebase/store/store.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Domain/constants/Components.dart';
-import 'package:parking_app/Repository/screens/booking/bookingscreen.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
+import 'package:parking_app/Repository/screens/payment/paymentscreen.dart';
 
 Future<TimeOfDay?> pickTime(BuildContext context) async {
   final TimeOfDay? picked = await showTimePicker(
@@ -160,6 +164,298 @@ class Uihelper {
     );
   }
 
+  static Future<void> popUpSheet2({
+    required BuildContext context,
+    required String zone,
+    required int price,
+    required TimeOfDay startTime,
+    required TimeOfDay endTime,
+    required int minutes,
+    required String duration,
+  }) {
+    int? selectedIndex;
+    String vehicleId = "";
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, bottomInset),
+              child: Wrap(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        customText(
+                          text: "Vehicles",
+                          color: Appcolors.mainBlack,
+                          fontWeight: FontWeight.bold,
+                          size: 38,
+                          fontFamily: "Medium",
+                        ),
+                        customText(
+                          text: "Select your vehicle",
+                          color: Appcolors.grey4,
+                          fontWeight: FontWeight.normal,
+                          size: 20,
+                        ),
+                        SizedBox(height: 20.h),
+                        // showing vehicles
+                        // retrieve from database
+                        StreamBuilder(
+                          stream: Retrieve.getVehiclesSnapshot(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (!snapshot.hasData ||
+                                snapshot.data!.docs.isEmpty) {
+                              return const Text('No data here :(');
+                            }
+                            return SizedBox(
+                              height: 280.h,
+                              child: ListView.builder(
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      snapshot.data!.docs[index].data()
+                                          as Map<String, dynamic>;
+                                  final sId = snapshot.data!.docs[index].id;
+                                  final isSelected = selectedIndex == index;
+                                  final sColor =
+                                      isSelected
+                                          ? Appcolors.mainBlack
+                                          : Appcolors.mainWhite;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6.0,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = index;
+                                          vehicleId = sId;
+                                        });
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            30.0,
+                                          ),
+                                          border: Border.all(
+                                            color: sColor,
+                                            width: 2.sp,
+                                          ),
+                                        ),
+                                        height: 120.h,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              height: 85.h,
+                                              width: 85.w,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: Appcolors.grey3,
+                                                  width: 1.5.sp,
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: Image.asset(
+                                                  "assets/images/${(data["Vtype"] as String).toLowerCase()}_icon.png",
+                                                  height: 40.h,
+                                                  width: 40.w,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: 15.h),
+                                                customText(
+                                                  text: data["Name"],
+                                                  color: Appcolors.mainGreen,
+                                                  fontWeight: FontWeight.w600,
+                                                  size: 28,
+                                                  fontFamily: "Medium",
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    customText(
+                                                      text: data["Type"],
+                                                      color:
+                                                          Appcolors.mainBlack,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      size: 14,
+                                                    ),
+                                                    SizedBox(width: 20.w),
+                                                    customText(
+                                                      text: data["License"],
+                                                      color:
+                                                          Appcolors.mainBlack,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      size: 14,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+
+                        SizedBox(height: 10.h),
+                        // ticket details
+                        customText(
+                          text: "Ticket Details",
+                          color: Appcolors.mainBlack,
+                          fontWeight: FontWeight.normal,
+                          size: 32,
+                          fontFamily: "Medium",
+                        ),
+                        SizedBox(height: 10.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 125.h,
+                              width: 125.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Appcolors.grey5,
+                                  width: 1.sp,
+                                ),
+                              ),
+                              child: Center(
+                                child: customText(
+                                  text: "P",
+                                  color: Appcolors.mainGreen,
+                                  fontWeight: FontWeight.bold,
+                                  size: 60,
+                                  fontFamily: "Bold",
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15.w),
+                            SizedBox(
+                              width: 160.w,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 10),
+                                  customText(
+                                    text: zone,
+                                    color: Appcolors.mainGreen,
+                                    fontWeight: FontWeight.w700,
+                                    size: 38.sp,
+                                    fontFamily: "Medium",
+                                  ),
+                                  SizedBox(height: 5.h),
+                                  customText(
+                                    text: "Parking Hours",
+                                    color: Appcolors.grey4,
+                                    fontWeight: FontWeight.normal,
+                                    size: 20.sp,
+                                    fontFamily: "Medium",
+                                  ),
+
+                                  customText(
+                                    text:
+                                        "${startTime.format(context)} - ${endTime.format(context)}",
+                                    color: Appcolors.mainBlack,
+                                    fontWeight: FontWeight.normal,
+                                    size: 15.sp,
+                                    fontFamily: "Medium",
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  customText(
+                                    text: "Total",
+                                    color: Appcolors.grey4,
+                                    fontWeight: FontWeight.normal,
+                                    size: 20.sp,
+                                    fontFamily: "Medium",
+                                  ),
+                                  Row(
+                                    children: [
+                                      customText(
+                                        text: "${Components.currency} $price",
+                                        color: Appcolors.mainBlack,
+                                        fontWeight: FontWeight.w600,
+                                        size: 30.sp,
+                                        fontFamily: "Medium",
+                                      ),
+                                      SizedBox(width: 5.w),
+                                      customText(
+                                        text: "${Components.currency}100/hr",
+                                        color: Appcolors.mainBlack,
+                                        fontWeight: FontWeight.normal,
+                                        size: 12.sp,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40.h),
+                        InkWell(
+                          onTap: () async {
+                            final flag = await Store.uploadParkingInfo(
+                              context: context,
+                              zone: zone,
+                              price: price,
+                              startTime: startTime,
+                              endTime: endTime,
+                              minutes: minutes,
+                              duration: duration,
+                              vehicleId: vehicleId,
+                            );
+                            if (context.mounted && flag != "failed") {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          Paymentscreen(parkingId: flag),
+                                ),
+                              );
+                            }
+                          },
+                          child: yellowButton(text: "Continue"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   static Widget popUpSheet({
     required BuildContext context,
     required String zone,
@@ -168,6 +464,7 @@ class Uihelper {
     TimeOfDay? selectedTime2;
     int price = 200;
     String duration = "02:00";
+    int minutes = 120;
 
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) {
@@ -308,6 +605,16 @@ class Uihelper {
                             if (time != null) {
                               setState(() {
                                 selectedTime = time;
+                                if (selectedTime != null &&
+                                    selectedTime2 != null) {
+                                  minutes =
+                                      getTimeDifferenceInMinutesFromTimeOfDay(
+                                        selectedTime!,
+                                        selectedTime2!,
+                                      );
+                                  price = (minutes * 1.67).toInt();
+                                  duration = convertMinutesToHHMM(minutes);
+                                }
                               });
                             }
                           },
@@ -370,9 +677,14 @@ class Uihelper {
               SizedBox(height: 20.h),
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Bookingscreen()),
+                  popUpSheet2(
+                    context: context,
+                    zone: zone,
+                    price: price,
+                    startTime: selectedTime!,
+                    endTime: selectedTime2!,
+                    minutes: minutes,
+                    duration: duration,
                   );
                 },
                 child: yellowButton(text: "Start Booking"),

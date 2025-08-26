@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:parking_app/Domain/Services/firebase/loggedIn.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
-import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/onbording/onbording1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,25 +45,16 @@ class SplashscreenState extends State<Splashscreen> {
     var isLoggedIn = pref.getBool(field1);
 
     if (isLoggedIn != null) {
-      if (isLoggedIn) {
-        Timer(Duration(milliseconds: 2900), () {
-          if (mounted) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Homescreen()),
-            );
-          }
-        });
-      } else {
-        Timer(Duration(milliseconds: 2900), () {
-          if (mounted) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Onbording1()),
-            );
-          }
-        });
-      }
+      Timer(Duration(milliseconds: 2900), () {
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Loggedin.nextRoute(isLoggedIn: isLoggedIn),
+            ),
+          );
+        }
+      });
     } else {
       Timer(Duration(milliseconds: 2900), () {
         if (mounted) {

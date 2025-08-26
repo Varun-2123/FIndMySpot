@@ -23,13 +23,6 @@ class _MapscreenState extends State<Mapscreen> {
     "A-111",
     "B-689",
   ];
-  // TimeOfDay? selectedTime;
-
-  // String getDisplayedTime(BuildContext context) {
-  //   final time = selectedTime ?? TimeOfDay.now();
-  //   return time.format(context);
-  // }
-
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
@@ -51,8 +44,6 @@ class _MapscreenState extends State<Mapscreen> {
                   height: 55.h,
                   width: 50.w,
                   decoration: BoxDecoration(
-                    // color: Appcolors.grey2,
-                    // color: Colors.amber,
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
                   ),

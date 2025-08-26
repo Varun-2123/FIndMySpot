@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:parking_app/Data/services/firebase/store/store.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Repository/screens/Map/mapscreen.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
@@ -262,18 +263,75 @@ class HomescreenState extends State<Homescreen> {
                                       // save button
                                       SizedBox(height: 40.h),
                                       InkWell(
-                                        onTap: () {
-                                          // saving the details
-
+                                        onTap: () async {
                                           // checking for invalid details
-
-                                          // navigation
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Mapscreen(),
-                                            ),
-                                          );
+                                          if (modelNameController
+                                                  .text
+                                                  .isEmpty ||
+                                              modelTypeController
+                                                  .text
+                                                  .isEmpty ||
+                                              numberPlateController
+                                                  .text
+                                                  .isEmpty) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: const Text(
+                                                        "All Fields are required!",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                backgroundColor: Colors.red,
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                margin: const EdgeInsets.only(
+                                                  top: 40, // distance from top
+                                                  left: 10,
+                                                  right: 10,
+                                                  bottom: 760,
+                                                ),
+                                                duration: const Duration(
+                                                  seconds: 2,
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            // saving the details
+                                            final flag =
+                                                await Store.uploadVehicle(
+                                                  type: defaultVeh,
+                                                  vehicleNameController:
+                                                      modelNameController,
+                                                  vehicleTypeController:
+                                                      modelTypeController,
+                                                  vehicleLicenseController:
+                                                      numberPlateController,
+                                                  context: context,
+                                                );
+                                            // navigation'
+                                            if (context.mounted && flag) {
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) => Mapscreen(),
+                                                ),
+                                              );
+                                            }
+                                          }
                                         },
                                         child: Uihelper.yellowButton(
                                           text: "Save $defaultVeh",
