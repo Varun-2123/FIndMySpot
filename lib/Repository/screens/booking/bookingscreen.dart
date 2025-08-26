@@ -10,6 +10,6 @@ class Bookingscreen extends StatefulWidget {
 class _BookingscreenState extends State<Bookingscreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.black);
+    return Scaffold(body: Center(child: Text("Bookings")));
   }
 }

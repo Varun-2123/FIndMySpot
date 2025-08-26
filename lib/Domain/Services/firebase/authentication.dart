@@ -49,12 +49,10 @@ class Authentication {
     required TextEditingController passwordController,
   }) async {
     try {
-      final userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim(),
-          );
-      print(userCredential);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
       return true;
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {

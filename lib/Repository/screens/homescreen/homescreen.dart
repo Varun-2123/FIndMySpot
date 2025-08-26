@@ -52,6 +52,7 @@ class HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
+      drawer: Uihelper.buildDrawer(context: context),
       body: Column(
         children: [
           // Profile
@@ -59,10 +60,19 @@ class HomescreenState extends State<Homescreen> {
           Row(
             children: [
               SizedBox(width: 20.w),
-              Image.asset(
-                "assets/images/Profile.png",
-                height: 60.h,
-                width: 60.w,
+              Builder(
+                builder: (context) {
+                  return InkWell(
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    child: Image.asset(
+                      "assets/images/Profile.png",
+                      height: 60.h,
+                      width: 60.w,
+                    ),
+                  );
+                },
               ),
               SizedBox(width: 220.w),
               InkWell(

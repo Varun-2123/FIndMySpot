@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,8 +8,12 @@ import 'package:parking_app/Data/services/firebase/retrieve/retrieve.dart';
 import 'package:parking_app/Data/services/firebase/store/store.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Domain/constants/Components.dart';
+import 'package:parking_app/Repository/screens/booking/bookingscreen.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/payment/paymentscreen.dart';
+import 'package:parking_app/Repository/screens/profile/profilescreen.dart';
+import 'package:parking_app/Repository/screens/tickets/ticketsscreen.dart';
+import 'package:parking_app/Repository/screens/vehicles/vehiclesscreen.dart';
 
 Future<TimeOfDay?> pickTime(BuildContext context) async {
   final TimeOfDay? picked = await showTimePicker(
@@ -717,5 +722,196 @@ class Uihelper {
     int minutes = totalMinutes % 60;
 
     return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}";
+  }
+
+  static buildDrawer({required BuildContext context}) {
+    return Drawer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // top box
+          Column(
+            children: [
+              Container(
+                height: 250.h,
+                width: double.maxFinite,
+                color: Color.fromARGB(255, 2, 3, 39),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 30.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(width: 20.w),
+                        Image.asset(
+                          "assets/images/logo (1).png",
+                          height: 60.h,
+                          width: 60.w,
+                          color: Appcolors.mainWhite,
+                        ),
+                        SizedBox(width: 20.w),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: customText(
+                        text: "Hello, User \nGreetings! ",
+                        // color: Colors.black,
+                        color: Appcolors.mainWhite,
+                        fontWeight: FontWeight.normal,
+                        size: 32,
+                        fontFamily: "Medium",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(height: 10.h, color: Appcolors.mainYellow),
+              // profile
+              Container(
+                height: 75.h,
+                decoration: BoxDecoration(
+                  border: Border.symmetric(
+                    horizontal: BorderSide(color: Colors.grey, width: 1.sp),
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(
+                    FontAwesomeIcons.userLarge,
+                    color: Color.fromARGB(255, 2, 3, 39),
+                  ),
+                  title: customText(
+                    text: "Profile",
+                    color: Appcolors.mainBlack,
+                    fontWeight: FontWeight.normal,
+                    size: 25,
+                    fontFamily: "Medium",
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profilescreen()),
+                    );
+                  },
+                ),
+              ),
+              // active ticket
+              Container(
+                height: 75.h,
+                decoration: BoxDecoration(
+                  border: Border.symmetric(
+                    horizontal: BorderSide(color: Colors.grey, width: 1.sp),
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(
+                    FontAwesomeIcons.ticket,
+                    size: 28,
+                    color: Color.fromARGB(255, 2, 3, 39),
+                  ),
+                  title: customText(
+                    text: "Active Ticket",
+                    color: Appcolors.mainBlack,
+                    fontWeight: FontWeight.normal,
+                    size: 25,
+                    fontFamily: "Medium",
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Ticketsscreen()),
+                    );
+                  },
+                ),
+              ),
+              // all bookings
+              Container(
+                height: 75.h,
+                decoration: BoxDecoration(
+                  border: Border.symmetric(
+                    horizontal: BorderSide(color: Colors.grey, width: 1.sp),
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(
+                    FontAwesomeIcons.calendarWeek,
+                    size: 28,
+                    color: Color.fromARGB(255, 2, 3, 39),
+                  ),
+                  title: customText(
+                    text: "All Bookings",
+                    color: Appcolors.mainBlack,
+                    fontWeight: FontWeight.normal,
+                    size: 25,
+                    fontFamily: "Medium",
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Bookingscreen()),
+                    );
+                  },
+                ),
+              ),
+              // vehicles
+              Container(
+                height: 75.h,
+                decoration: BoxDecoration(
+                  border: Border.symmetric(
+                    horizontal: BorderSide(color: Colors.grey, width: 1.sp),
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(
+                    FontAwesomeIcons.car,
+                    size: 28,
+                    color: Color.fromARGB(255, 2, 3, 39),
+                  ),
+                  title: customText(
+                    text: "Vehicles",
+                    color: Appcolors.mainBlack,
+                    fontWeight: FontWeight.normal,
+                    size: 25,
+                    fontFamily: "Medium",
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Vehiclesscreen()),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          // bottom box
+          Container(
+            height: 100.h,
+            color: const Color.fromARGB(255, 2, 3, 39),
+            child: Center(
+              child: ListTile(
+                leading: Icon(
+                  FontAwesomeIcons.powerOff,
+                  size: 34,
+                  color: Appcolors.mainWhite,
+                ),
+                title: customText(
+                  text: "Logout",
+                  color: Appcolors.mainWhite,
+                  fontWeight: FontWeight.normal,
+                  size: 25,
+                  fontFamily: "Medium",
+                ),
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
