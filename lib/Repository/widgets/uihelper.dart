@@ -180,7 +180,8 @@ class Uihelper {
     required String duration,
   }) {
     int? selectedIndex;
-    String vehicleId = "";
+    String vehicleId = "car";
+    var flag1 = false;
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     return showModalBottomSheet(
       context: context,
@@ -249,6 +250,7 @@ class Uihelper {
                                         setState(() {
                                           selectedIndex = index;
                                           vehicleId = sId;
+                                          flag1 = true;
                                         });
                                       },
                                       child: Container(
@@ -427,25 +429,49 @@ class Uihelper {
                         SizedBox(height: 40.h),
                         InkWell(
                           onTap: () async {
-                            final flag = await Store.uploadParkingInfo(
-                              context: context,
-                              zone: zone,
-                              price: price,
-                              startTime: startTime,
-                              endTime: endTime,
-                              minutes: minutes,
-                              duration: duration,
-                              vehicleId: vehicleId,
-                            );
-                            if (context.mounted && flag != "failed") {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) =>
-                                          Paymentscreen(parkingId: flag),
+                            if (!flag1) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    "Please select a vehicle",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating,
+                                  margin: const EdgeInsets.only(
+                                    top: 10, // distance from top
+                                    left: 10,
+                                    right: 10,
+                                    bottom: 760,
+                                  ),
+                                  duration: const Duration(seconds: 2),
                                 ),
                               );
+                            } else {
+                              final flag = await Store.uploadParkingInfo(
+                                context: context,
+                                zone: zone,
+                                price: price,
+                                startTime: startTime,
+                                endTime: endTime,
+                                minutes: minutes,
+                                duration: duration,
+                                vehicleId: vehicleId,
+                              );
+                              if (context.mounted && flag != "failed") {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) =>
+                                            Paymentscreen(parkingId: flag),
+                                  ),
+                                );
+                              }
                             }
                           },
                           child: yellowButton(text: "Continue"),

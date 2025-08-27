@@ -11,6 +11,15 @@ class Retrieve {
         .snapshots();
   }
 
+  // retrieving user specific vehicles
+  // instance or a stream builder output
+  static Stream<QuerySnapshot> getParkingSnapshot() {
+    return FirebaseFirestore.instance
+        .collection('parking_info')
+        .where('Creator', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .snapshots();
+  }
+
   // retrieving parking Info
   // snapshot output
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getParkingInfoById(
@@ -26,6 +35,7 @@ class Retrieve {
     }
   }
 
+  // get vehicle by id
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getVehicleById(
     String vehId,
   ) {

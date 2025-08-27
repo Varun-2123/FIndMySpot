@@ -59,10 +59,18 @@ class SplashscreenState extends State<Splashscreen> {
         if (mounted) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Onbording1()),
+            MaterialPageRoute(
+              builder: (context) => Loggedin.nextRoute(isLoggedIn: isLoggedIn!),
+            ),
           );
         }
       });
+    }
+    if (isLoggedIn == null && mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Onbording1()),
+      );
     }
   }
 }

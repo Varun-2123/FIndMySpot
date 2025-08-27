@@ -2,7 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
-import 'package:parking_app/Repository/screens/onbording/onbording1.dart';
+import 'package:parking_app/Repository/screens/login/loginscreen.dart';
+// import 'package:parking_app/Repository/screens/onbording/onbording1.dart';
 
 class Loggedin {
   static Widget nextRoute({required bool isLoggedIn}) {
@@ -12,10 +13,10 @@ class Loggedin {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (snapshot.data != null && isLoggedIn) {
+        if (snapshot.data != null && isLoggedIn && isLoggedIn) {
           return Homescreen();
         }
-        return Onbording1();
+        return Loginscreen();
       },
     );
   }

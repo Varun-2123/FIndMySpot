@@ -77,6 +77,7 @@ class Store {
             "Duration": duration,
             "VehicleID": vehicleId,
             "Date": FieldValue.serverTimestamp(),
+            "Creator": FirebaseAuth.instance.currentUser!.uid,
           });
       String docId = docRef.id;
       return docId;

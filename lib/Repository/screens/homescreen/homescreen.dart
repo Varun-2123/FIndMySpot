@@ -47,6 +47,13 @@ class HomescreenState extends State<Homescreen> {
   var modelTypeController = TextEditingController();
 
   var numberPlateController = TextEditingController();
+  @override
+  void dispose() {
+    modelNameController.dispose();
+    modelTypeController.dispose();
+    numberPlateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
