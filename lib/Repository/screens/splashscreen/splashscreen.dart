@@ -17,7 +17,6 @@ class SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-
     checkerFunction();
   }
 

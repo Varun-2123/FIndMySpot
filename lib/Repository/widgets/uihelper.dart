@@ -8,6 +8,7 @@ import 'package:parking_app/Data/services/firebase/retrieve/retrieve.dart';
 import 'package:parking_app/Data/services/firebase/store/store.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Domain/constants/Components.dart';
+import 'package:parking_app/Repository/screens/boarding/boarding.dart';
 import 'package:parking_app/Repository/screens/booking/bookingscreen.dart';
 import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
 import 'package:parking_app/Repository/screens/payment/paymentscreen.dart';
@@ -757,7 +758,7 @@ class Uihelper {
                     Padding(
                       padding: EdgeInsets.all(12.0),
                       child: customText(
-                        text: "Hello, User \nGreetings! ",
+                        text: "Hello User, \nGreetings! ",
                         // color: Colors.black,
                         color: Appcolors.mainWhite,
                         fontWeight: FontWeight.normal,
@@ -906,6 +907,10 @@ class Uihelper {
                 ),
                 onTap: () {
                   FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Boarding()),
+                  );
                 },
               ),
             ),

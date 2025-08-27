@@ -50,7 +50,7 @@ class _LoginscreenState extends State<Loginscreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var isNotVisible = true;
-  var isChecked = false;
+  var isChecked = true;
   @override
   void dispose() {
     emailController.dispose();
