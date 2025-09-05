@@ -26,14 +26,14 @@ class HomescreenState extends State<Homescreen> {
     {
       "icon": "assets/images/bike_icon.png",
       "text": "Bike",
-      "img": "assets/images/bike1.png",
+      "img": "assets/images/Bike1.png",
       "tapped": "f",
       "hint": "Scooter, Sports, Electric etc",
     },
     {
       "icon": "assets/images/bus_icon.png",
       "text": "Bus",
-      "img": "assets/images/bus.png",
+      "img": "assets/images/Bus1.png",
       "tapped": "f",
       "hint": "Mini Bus, Shuttle, Double-Decker etc.",
     },
@@ -59,6 +59,7 @@ class HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       drawer: Uihelper.buildDrawer(context: context),
       body: Column(
         children: [
@@ -278,7 +279,7 @@ class HomescreenState extends State<Homescreen> {
                                         ),
                                       ),
                                       // save button
-                                      SizedBox(height: 40.h),
+                                      SizedBox(height: 230.h),
                                       InkWell(
                                         onTap: () async {
                                           // checking for invalid details

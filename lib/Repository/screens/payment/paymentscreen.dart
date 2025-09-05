@@ -39,10 +39,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => Homescreen()),
-                        );
+                        Navigator.pop(context);
                       },
                       child: Container(
                         height: 55.h,

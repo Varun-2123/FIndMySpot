@@ -596,24 +596,17 @@ class Uihelper {
                             height: 85.h,
                             width: 110.w,
                             decoration: BoxDecoration(
-                              color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(12.0),
                               image: DecorationImage(
                                 image: AssetImage("assets/images/MiniMap.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  top: 12.h,
-                                  left: 40.w,
-                                  child: Icon(
-                                    FontAwesomeIcons.locationDot,
-                                    size: 36,
-                                  ),
-                                ),
-                              ],
+                            child: Center(
+                              child: Icon(
+                                FontAwesomeIcons.locationDot,
+                                size: 36,
+                              ),
                             ),
                           ),
                         ],
@@ -748,7 +741,7 @@ class Uihelper {
     int hours = totalMinutes ~/ 60;
     int minutes = totalMinutes % 60;
 
-    return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}";
+    return "${hours.toString().padLeft(2, '0')} : ${minutes.toString().padLeft(2, '0')}";
   }
 
   static buildDrawer({required BuildContext context}) {

@@ -15,7 +15,6 @@ class Vehiclesscreen extends StatefulWidget {
 class _VehiclesscreenState extends State<Vehiclesscreen> {
   @override
   Widget build(BuildContext context) {
-    String vehicleId = "";
     return Scaffold(
       body: Column(
         children: [
@@ -74,70 +73,63 @@ class _VehiclesscreenState extends State<Vehiclesscreen> {
                     final data =
                         snapshot.data!.docs[index].data()
                             as Map<String, dynamic>;
-                    final sId = snapshot.data!.docs[index].id;
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            vehicleId = sId;
-                          });
-                        },
-                        child: SizedBox(
-                          height: 120.h,
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 85.h,
-                                width: 85.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Appcolors.grey3,
-                                    width: 1.5.sp,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/images/${(data["Vtype"] as String).toLowerCase()}_icon.png",
-                                    height: 40.h,
-                                    width: 40.w,
-                                  ),
+                      child: SizedBox(
+                        height: 120.h,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 85.h,
+                              width: 85.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Appcolors.grey3,
+                                  width: 1.5.sp,
                                 ),
                               ),
-                              SizedBox(width: 10.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 15.h),
-                                  Uihelper.customText(
-                                    text: data["Name"],
-                                    color: Appcolors.mainGreen,
-                                    fontWeight: FontWeight.w600,
-                                    size: 28,
-                                    fontFamily: "Medium",
-                                  ),
-                                  Row(
-                                    children: [
-                                      Uihelper.customText(
-                                        text: data["Type"],
-                                        color: Appcolors.mainBlack,
-                                        fontWeight: FontWeight.normal,
-                                        size: 14,
-                                      ),
-                                      SizedBox(width: 20.w),
-                                      Uihelper.customText(
-                                        text: data["License"],
-                                        color: Appcolors.mainBlack,
-                                        fontWeight: FontWeight.normal,
-                                        size: 14,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/images/${(data["Vtype"] as String).toLowerCase()}_icon.png",
+                                  height: 40.h,
+                                  width: 40.w,
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(width: 10.w),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 15.h),
+                                Uihelper.customText(
+                                  text: data["Name"],
+                                  color: Appcolors.mainGreen,
+                                  fontWeight: FontWeight.w600,
+                                  size: 28,
+                                  fontFamily: "Medium",
+                                ),
+                                Row(
+                                  children: [
+                                    Uihelper.customText(
+                                      text: data["Type"],
+                                      color: Appcolors.mainBlack,
+                                      fontWeight: FontWeight.normal,
+                                      size: 14,
+                                    ),
+                                    SizedBox(width: 20.w),
+                                    Uihelper.customText(
+                                      text: data["License"],
+                                      color: Appcolors.mainBlack,
+                                      fontWeight: FontWeight.normal,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     );
