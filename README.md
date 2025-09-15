@@ -1,6 +1,6 @@
 # parking_app
 
-A new Flutter project.
+This Flutter project is a Parking Application that integrates multiple modern development practices to deliver a complete mobile solution. The project highlights the use of Clean Code Architecture for a well-structured and maintainable codebase, alongside Firebase integration for authentication, data storage, and real-time retrieval of parking information. Additionally, the application’s UI/UX design was crafted using Figma, ensuring a visually appealing and user-friendly experience. By combining clean architecture, robust backend services, and thoughtful design, this project demonstrates a holistic approach to building scalable and production-ready mobile applications.
 
 ## Getting Started
 
