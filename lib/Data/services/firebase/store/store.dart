@@ -4,6 +4,57 @@ import 'package:flutter/material.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 
 class Store {
+  static Future<bool> uploadUser({
+    required TextEditingController name,
+    required TextEditingController email,
+    required TextEditingController phone,
+    required String gender,
+    required String imageUrl,
+    required BuildContext context,
+  }) async {
+    try {
+      await FirebaseFirestore.instance.collection("personal_info").add({
+        "Profile": imageUrl,
+        "Name": name.text.trim(),
+        "Email": email.text.trim(),
+        "Phone": phone.text.trim(),
+        "Gender": gender.trim(),
+        "Creator": FirebaseAuth.instance.currentUser!.uid,
+      });
+      return true;
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    e.message ?? 'An unknown error occurred',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            backgroundColor: Appcolors.mainYellow,
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.only(
+              top: 40,
+              left: 10,
+              right: 10,
+              bottom: 760,
+            ),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    }
+    return false;
+  }
+
   // Upload Vehicle
   static Future<bool> uploadVehicle({
     required String type,

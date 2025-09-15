@@ -150,6 +150,29 @@ class Uihelper {
     );
   }
 
+  static genderChoice({required String tapped, required IconData icon}) {
+    var color1 = Appcolors.mainWhite;
+    var color2 = Appcolors.mainBlack;
+    if (tapped == "t") {
+      color1 = Appcolors.mainYellow;
+      // color1 = const Color.fromARGB(255, 33, 249, 199);
+      // color2 = const Color.fromARGB(255, 8, 120, 73);
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        height: 40.h,
+        width: 95.w,
+        decoration: BoxDecoration(
+          border: Border.all(color: color2, width: 0.8),
+          color: color1,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Center(child: Icon(icon, size: 27)),
+      ),
+    );
+  }
+
   static yellowButton({required String text}) {
     return Container(
       height: 85.h,
@@ -591,7 +614,7 @@ class Uihelper {
                               ],
                             ),
                           ),
-                          SizedBox(width: 70.w),
+                          SizedBox(width: 60.w),
                           Container(
                             height: 85.h,
                             width: 110.w,

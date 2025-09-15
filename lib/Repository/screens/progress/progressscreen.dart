@@ -83,7 +83,8 @@ class _ProgressscreenState extends State<Progressscreen> {
                             ),
                             Uihelper.customText(
                               // personal info recall
-                              text: "persons's ${data2["Vtype"]}",
+                              text:
+                                  "${HomescreenState.name}'s ${data2["Vtype"]}",
                               color: Appcolors.grey4,
                               fontWeight: FontWeight.w600,
                               size: 18,

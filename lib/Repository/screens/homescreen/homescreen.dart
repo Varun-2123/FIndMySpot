@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:parking_app/Data/services/firebase/retrieve/retrieve.dart';
 import 'package:parking_app/Data/services/firebase/store/store.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Repository/screens/Map/mapscreen.dart';
@@ -14,7 +15,7 @@ class Homescreen extends StatefulWidget {
 }
 
 class HomescreenState extends State<Homescreen> {
-  var name = "John";
+  static var name = "John";
   var vehicles = [
     {
       "icon": "assets/images/car_icon.png",
@@ -65,48 +66,78 @@ class HomescreenState extends State<Homescreen> {
         children: [
           // Profile
           SizedBox(height: 60.h),
-          Row(
-            children: [
-              SizedBox(width: 20.w),
-              Builder(
-                builder: (context) {
-                  return InkWell(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: Image.asset(
-                      "assets/images/Profile.png",
-                      height: 60.h,
-                      width: 60.w,
+          SizedBox(
+            height: 125.h,
+            child: StreamBuilder(
+              stream: Retrieve.getPersonalInfo(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return SizedBox(
+                    height: 200,
+                    width: 100,
+                    child: Center(child: Text("No data")),
+                  );
+                }
+                final data =
+                    snapshot.data!.docs.first.data() as Map<String, dynamic>;
+                name = data["Name"];
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: 20.w),
+                        Builder(
+                          builder: (context) {
+                            return InkWell(
+                              onTap: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              child: CircleAvatar(
+                                radius: 30.h,
+                                backgroundImage: NetworkImage(data["Profile"]),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(width: 220.w),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Mapscreen(),
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            FontAwesomeIcons.locationDot,
+                            size: 38.sp,
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
-              SizedBox(width: 220.w),
-              InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Mapscreen()),
-                  );
-                },
-                child: Icon(FontAwesomeIcons.locationDot, size: 38.sp),
-              ),
-            ],
+                    SizedBox(height: 30.h),
+                    Row(
+                      children: [
+                        SizedBox(width: 25.w),
+                        Uihelper.customText(
+                          text: "Hello, ${data["Name"]}",
+                          color: Appcolors.mainBlack,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Medium",
+                          size: 22,
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
-          SizedBox(height: 30.h),
-          Row(
-            children: [
-              SizedBox(width: 25.w),
-              Uihelper.customText(
-                text: "Hello, $name",
-                color: Appcolors.mainBlack,
-                fontWeight: FontWeight.w500,
-                fontFamily: "Medium",
-                size: 22,
-              ),
-            ],
-          ),
+
           Row(
             children: [
               SizedBox(width: 25.w),
@@ -236,7 +267,7 @@ class HomescreenState extends State<Homescreen> {
                                           keyboardType: TextInputType.text,
                                           controller: modelNameController,
                                           decoration: InputDecoration(
-                                            labelText: "Model Name",
+                                            labelText: "Model name",
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12.0),

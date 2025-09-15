@@ -100,7 +100,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
                       size: 38,
                       fontFamily: "Medium",
                     ),
-                    SizedBox(width: 60.w),
+                    SizedBox(width: 50.w),
                     Container(
                       height: 85.h,
                       width: 110.w,
@@ -111,14 +111,8 @@ class _PaymentscreenState extends State<Paymentscreen> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 12.h,
-                            left: 40.w,
-                            child: Icon(FontAwesomeIcons.locationDot, size: 36),
-                          ),
-                        ],
+                      child: Center(
+                        child: Icon(FontAwesomeIcons.locationDot, size: 36),
                       ),
                     ),
                   ],

@@ -78,7 +78,7 @@ class _CompletedscreenState extends State<Completedscreen> {
                           fontFamily: "Regular",
                         ),
                         Uihelper.customText(
-                          text: "John Doe's $veh",
+                          text: "${HomescreenState.name}'s $veh",
                           color: Appcolors.grey4,
                           fontWeight: FontWeight.normal,
                           size: 22,

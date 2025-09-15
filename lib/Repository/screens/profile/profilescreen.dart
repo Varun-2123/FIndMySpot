@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:parking_app/Data/services/firebase/retrieve/retrieve.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
 
@@ -15,157 +16,173 @@ class _ProfilescreenState extends State<Profilescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            color: Color.fromARGB(255, 2, 3, 39),
-            child: Column(
-              children: [
-                SizedBox(height: 60.h),
-                Row(
+      body: StreamBuilder(
+        stream: Retrieve.getPersonalInfo(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Text('No data here :(');
+          }
+          final data = snapshot.data!.docs.first.data() as Map<String, dynamic>;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // header
+              Container(
+                color: Color.fromARGB(255, 2, 3, 39),
+                child: Column(
                   children: [
-                    SizedBox(width: 15.w),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 55.h,
-                        width: 50.w,
-                        decoration: BoxDecoration(
-                          color: Appcolors.grey2,
-                          borderRadius: BorderRadius.circular(20.0),
+                    SizedBox(height: 60.h),
+                    Row(
+                      children: [
+                        SizedBox(width: 15.w),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 55.h,
+                            width: 50.w,
+                            decoration: BoxDecoration(
+                              color: Appcolors.grey2,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Icon(
+                              FontAwesomeIcons.chevronLeft,
+                              size: 22.sp,
+                            ),
+                          ),
                         ),
-                        child: Icon(FontAwesomeIcons.chevronLeft, size: 22.sp),
-                      ),
+                        SizedBox(width: 15.w),
+                      ],
                     ),
-                    SizedBox(width: 15.w),
+                    SizedBox(height: 15.h),
+                    Uihelper.customText(
+                      text: "Personal info",
+                      color: Appcolors.mainWhite,
+                      fontWeight: FontWeight.w600,
+                      size: 32,
+                      fontFamily: "Medium",
+                    ),
+                    SizedBox(height: 30.h),
                   ],
                 ),
-                SizedBox(height: 15.h),
-                Uihelper.customText(
-                  text: "Personal info",
-                  color: Appcolors.mainWhite,
-                  fontWeight: FontWeight.w600,
-                  size: 32,
-                  fontFamily: "Medium",
-                ),
-                SizedBox(height: 30.h),
-              ],
-            ),
-          ),
+              ),
 
-          // main body
-          // for image display and edit
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: CircleAvatar(
-              radius: 70.w,
-              backgroundColor: Colors.blueGrey,
-              backgroundImage: AssetImage("assets/images/Profile.png"),
-            ),
-          ),
-          // info
-          // name
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15.0,
-              horizontal: 22.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Uihelper.customText(
-                  text: "Name",
-                  color: Appcolors.grey7,
-                  fontWeight: FontWeight.normal,
-                  size: 16,
+              // main body
+              // for image display and edit
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: CircleAvatar(
+                  radius: 70.w,
+                  backgroundColor: Colors.blueGrey,
+                  backgroundImage: NetworkImage(data["Profile"]),
                 ),
-                Uihelper.customText(
-                  text: "John Doe",
-                  color: Appcolors.mainBlack,
-                  fontWeight: FontWeight.normal,
-                  size: 24,
-                  fontFamily: "Medium",
+              ),
+              // info
+              // name
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 22.0,
                 ),
-              ],
-            ),
-          ),
-          // Gender
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15.0,
-              horizontal: 22.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Uihelper.customText(
-                  text: "Gender",
-                  color: Appcolors.grey7,
-                  fontWeight: FontWeight.normal,
-                  size: 16,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Uihelper.customText(
+                      text: "Name",
+                      color: Appcolors.grey7,
+                      fontWeight: FontWeight.normal,
+                      size: 16,
+                    ),
+                    Uihelper.customText(
+                      text: data["Name"],
+                      color: Appcolors.mainBlack,
+                      fontWeight: FontWeight.normal,
+                      size: 24,
+                      fontFamily: "Medium",
+                    ),
+                  ],
                 ),
-                Uihelper.customText(
-                  text: "Male",
-                  color: Appcolors.mainBlack,
-                  fontWeight: FontWeight.normal,
-                  size: 24,
+              ),
+              // Gender
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 22.0,
                 ),
-              ],
-            ),
-          ),
-          //phone no
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15.0,
-              horizontal: 22.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Uihelper.customText(
-                  text: "Phone no.",
-                  color: Appcolors.grey7,
-                  fontWeight: FontWeight.normal,
-                  size: 16,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Uihelper.customText(
+                      text: "Gender",
+                      color: Appcolors.grey7,
+                      fontWeight: FontWeight.normal,
+                      size: 16,
+                    ),
+                    Uihelper.customText(
+                      text: data["Gender"],
+                      color: Appcolors.mainBlack,
+                      fontWeight: FontWeight.normal,
+                      size: 24,
+                    ),
+                  ],
                 ),
-                Uihelper.customText(
-                  text: "+91 123456996",
-                  color: Appcolors.mainBlack,
-                  fontWeight: FontWeight.normal,
-                  size: 24,
+              ),
+              //phone no
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 22.0,
                 ),
-              ],
-            ),
-          ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Uihelper.customText(
+                      text: "Phone no.",
+                      color: Appcolors.grey7,
+                      fontWeight: FontWeight.normal,
+                      size: 16,
+                    ),
+                    Uihelper.customText(
+                      text: "+91 ${data["Phone"]}",
+                      color: Appcolors.mainBlack,
+                      fontWeight: FontWeight.normal,
+                      size: 24,
+                    ),
+                  ],
+                ),
+              ),
 
-          //email
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15.0,
-              horizontal: 22.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Uihelper.customText(
-                  text: "Email",
-                  color: Appcolors.grey7,
-                  fontWeight: FontWeight.normal,
-                  size: 16,
+              //email
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 22.0,
                 ),
-                Uihelper.customText(
-                  text: "emailemail@gmail.com",
-                  color: Appcolors.mainBlack,
-                  fontWeight: FontWeight.normal,
-                  size: 18,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Uihelper.customText(
+                      text: "Email",
+                      color: Appcolors.grey7,
+                      fontWeight: FontWeight.normal,
+                      size: 16,
+                    ),
+                    Uihelper.customText(
+                      text: data["Email"],
+                      color: Appcolors.mainBlack,
+                      fontWeight: FontWeight.normal,
+                      size: 18,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }

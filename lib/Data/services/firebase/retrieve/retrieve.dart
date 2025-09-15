@@ -20,6 +20,14 @@ class Retrieve {
         .snapshots();
   }
 
+  // retrieving user information of the user stored in instance
+  static Stream<QuerySnapshot> getPersonalInfo() {
+    return FirebaseFirestore.instance
+        .collection("personal_info")
+        .where('Creator', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .snapshots();
+  }
+
   // retrieving parking Info
   // snapshot output
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getParkingInfoById(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parking_app/Domain/Services/firebase/authentication.dart';
 import 'package:parking_app/Domain/constants/AppColors.dart';
-import 'package:parking_app/Repository/screens/homescreen/homescreen.dart';
+import 'package:parking_app/Repository/screens/form/formscreen.dart';
 import 'package:parking_app/Repository/screens/login/loginscreen.dart';
 import 'package:parking_app/Repository/widgets/uihelper.dart';
 
@@ -269,7 +269,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                   );
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const Homescreen()),
+                    MaterialPageRoute(builder: (context) => Formscreen()),
                   );
                 }
               }
